@@ -1,18 +1,17 @@
-import * as React from 'react';
-import { getPokemon } from "./api/getPokemon";
-import {useEffect} from "react";
-const initUrl: string = 'https://pokeapi.co/api/v2/pokemon/';
+import React, { useEffect } from 'react';
+import { pokemonData$ } from "./store/observables";
+
 
 
 function App() {
   useEffect(() => {
-    const pokemonStream$ = getPokemon(initUrl);
 
-    const pokemonSubscriber$ = pokemonStream$.subscribe(console.log);
+    let subscriber = pokemonData$.subscribe();
 
     return () => {
-      pokemonSubscriber$.unsubscribe();
+      subscriber.unsubscribe();
     }
+
   }, [])
 
   return (

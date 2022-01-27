@@ -1,20 +1,7 @@
-import {BehaviorSubject, concatMap, of} from "rxjs";
+import { PokemonSubject } from "../store/observables";
+import { BehaviorSubject } from "rxjs";
 
-const rawData$ = new BehaviorSubject<any>([]);
-
-export const getPokemon = (url: string) => {
-
-  const concatData$ = rawData$.pipe(
-    concatMap((data) => of(data)),
-  )
-
-  fetchNextForObservable(url, rawData$);
-
-  return concatData$;
-}
-
-
-const fetchNextForObservable = (url: string, observable$: typeof rawData$) => {
+export const fetchNextForPokemonSubject = (url: string, observable$: BehaviorSubject<PokemonSubject[]> ) => {
 
   fetch(url)
     .then(res => {
@@ -24,7 +11,7 @@ const fetchNextForObservable = (url: string, observable$: typeof rawData$) => {
       observable$.next([...observable$.getValue(), ...data.results]);
 
       if (data.next) {
-        fetchNextForObservable(data.next, observable$);
+        fetchNextForPokemonSubject(data.next, observable$);
       }
     })
 }
