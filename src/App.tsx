@@ -1,22 +1,15 @@
 import React, { useEffect } from 'react';
 import { pokemonData$ } from "./store/observables";
+import { useObservableState } from "observable-hooks";
 
 
 
 function App() {
-  useEffect(() => {
-
-    let subscriber = pokemonData$.subscribe();
-
-    return () => {
-      subscriber.unsubscribe();
-    }
-
-  }, [])
+  let pokemon = useObservableState(pokemonData$, []);
 
   return (
     <div>
-      eggs
+      { pokemon.map(p => (<div key={ p.name }>{ p.name }</div>)) }
     </div>
   );
 }
