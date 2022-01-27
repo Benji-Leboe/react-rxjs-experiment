@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import * as React from 'react';
 import { pokemonData$ } from "./store/observables";
 import { useObservableState } from "observable-hooks";
 
