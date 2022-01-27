@@ -1,14 +1,30 @@
+import {BehaviorSubject, concatMap, of} from "rxjs";
 
-export const getPokemon = async (url: string): Promise<{} | undefined> => {
+const rawData$ = new BehaviorSubject<any>([]);
 
-  return await fetch(url)
+export const getPokemon = (url: string) => {
+
+  const concatData$ = rawData$.pipe(
+    concatMap((data) => of(data)),
+  )
+
+  fetchNextForObservable(url, rawData$);
+
+  return concatData$;
+}
+
+
+const fetchNextForObservable = (url: string, observable$: typeof rawData$) => {
+
+  fetch(url)
     .then(res => {
       return res.json();
     })
     .then(data => {
-      console.log(data);
+      observable$.next([...observable$.getValue(), ...data.results]);
+
       if (data.next) {
-        return getPokemon(data.next);
+        fetchNextForObservable(data.next, observable$);
       }
     })
 }
