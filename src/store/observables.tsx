@@ -1,12 +1,17 @@
-import { BehaviorSubject, combineLatestWith, concatAll, map, tap } from "rxjs";
+import { BehaviorSubject,  map } from "rxjs";
 import { fetchNextForPokemonSubject } from "../api/getPokemon";
-import { ajax } from "rxjs/ajax";
 
 const initUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
-export interface PokemonBase {
-  name: string;
-  url: string;
+interface Sprites {
+  back_default: string;
+  back_default_female: string;
+  back_shiny: string;
+  back_shiny_female: string;
+  front_default: string;
+  front_default_female: string;
+  front_shiny: string;
+  front_shiny_female: string;
 }
 
 export interface Pokemon {
@@ -24,7 +29,7 @@ export interface Pokemon {
   "order": number;
   "past_types": any[];
   "species": object;
-  "sprites": object;
+  "sprites": Sprites;
   "stats": object[];
   "types": object[];
   "weight": number;

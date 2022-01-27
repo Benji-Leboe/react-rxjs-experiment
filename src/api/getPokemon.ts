@@ -6,6 +6,8 @@ export const fetchNextForPokemonSubject = (url: string, observable$: BehaviorSub
   fetch(url)
     .then(res => res.json())
     .then(data => {
+      //each segment of 20 runs fetch on individual pokemon
+
       for (let result of data.results) {
         fetch(result.url)
           .then(res => res.json())

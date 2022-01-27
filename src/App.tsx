@@ -9,7 +9,11 @@ function App() {
 
   return (
     <div>
-      { pokemon.map(p => (<div key={ p.name }>{ p.name }</div>)) }
+      { pokemon.map(p => (
+        <div key={ p.name }>
+          { p.name }
+          <img alt={ p.name } src={ `${p.sprites.front_default}` } />
+        </div>)) }
     </div>
   );
 }
