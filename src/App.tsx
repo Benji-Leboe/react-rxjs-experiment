@@ -1,20 +1,15 @@
 import * as React from 'react';
-import { pokemonData$ } from "./store/observables";
-import { useObservableState } from "observable-hooks";
+import { PokemonCtxProvider } from './store/context';
 
 
 
 function App() {
-  let pokemon = useObservableState(pokemonData$, []);
 
   return (
-    <div>
-      { pokemon.map(p => (
-        <div key={ p.name }>
-          { p.name }
-          <img alt={ p.name } src={ `${p.sprites.front_default}` } />
-        </div>)) }
-    </div>
+    <PokemonCtxProvider>
+      <div>
+      </div>
+    </PokemonCtxProvider>
   );
 }
 
